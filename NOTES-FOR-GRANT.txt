@@ -1,0 +1,23 @@
+Hi Grant,
+
+Due to family commitments - our toddler has been very unwell - and work pressures I haven't been granted time to work through the test and come up with a plan and start producing code.  As a result, I've been called away from my desk more times than I want.  As you know, that kind of disruption makes it difficult to focus and get work done with a good flow.
+
+What you have so far is a rudimentary application that handles REST requests with a view to processing those requests.  There is more outstanding work to do.
+
+What has been supplied so far is:
+
+* Zend Frameworks 1.12 framework for REST response to a request
+* authenticate object to grant access to username/password combination
+
+Outstanding pieces of work are:
+
+* context switching to be responsive to Accept-header (JSON or XML)
+* retrieving the cve data for the response
+* failure responses
+* unit tests
+
+I want to give myself a wide margin at present, because there's no easy way of predicting how my time will be called upon in the next few days, so I believe I should have something ready to look at by end of play Thursday.  Of course, if I complete it sooner - which is my sincere aim - then I will let you know.
+
+Regards,
+
+Quentin
