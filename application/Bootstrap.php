@@ -6,7 +6,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     /**
      * Bootstraps autoloader
      * 
-     * @return void
+     * @return Zend_Loader_Autoloader
      * 
      * @link http://robertbasic.com/blog/using-the-new-autoloaders-from-zend-framework-1-12
      */
@@ -37,6 +37,24 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $front = Zend_Controller_Front::getInstance();
         $route = new Zend_Rest_Route($front);
         $front->getRouter()->addRoute( 'default', $route );
+    }
+    
+    /**
+     * Initialising the routes
+     * 
+     * @return void
+     */
+    protected function _initRoutes()
+    {
+        $route = new Zend_Controller_Router_Route(
+            'cve/:cvenumber',
+            array(
+                'controller' => 'cve',
+                'action'     => 'index'
+            )
+        );
+
+        Zend_Controller_Front::getInstance()->getRouter()->addRoute('cvenumber', $route);
     }
     
 }
