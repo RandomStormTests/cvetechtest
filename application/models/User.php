@@ -3,7 +3,7 @@
  * `user` table model
  * 
  * @category ZF
- * @package  Model
+ * @package  Models/User
  * @author   Quentin Jendrzewski <qljsystems@hotmail.co.uk>
  */
 class User extends \Zend_Db_Table_Abstract
