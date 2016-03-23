@@ -20,7 +20,11 @@ class CveController extends \Zend_Controller_Action
      */
     public function indexAction()
     {
-        if ( $this->_authenticate() ) {
+        if ( !empty( $this->getParam('cvenumber') ) ) {
+            $name = $this->getParam('cvenumber');
+            $oCveByName = new \API\Services\GetCveByName();
+            $arrParam = $oCveByName->get( $this->getParam('cvenumber') );
+        } else {
             $arrParam = array_merge(
                 $this->getAllParams(),
                 array(
@@ -36,14 +40,12 @@ class CveController extends \Zend_Controller_Action
                     'status' => ResponseController::STATUS_FORBIDDEN,
                 )
             );
-            $this->_forward( 'index', 'response', null, $arrParam );
-        }
-        
-//        if ( 'cve' == $arrParam['service'] ) {
-//            
-//        }
-            
+        }   
+        $this->forward( 'index', 'response', null, $arrParam );
     }
+    
+    
+    
     
     /**
      * Authenticating username/password for access to the service
