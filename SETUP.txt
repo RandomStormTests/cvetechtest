@@ -1,0 +1,24 @@
+1. You will need to install Zend Framework 1.12 and ensure that the path to the Zend library is included in the php.ini include_path
+2. You will also need to install PHPUnit and ensure that the PATH environmental variable includes the path to the vendor folder
+3. The application.ini has a setting url.cve, which points to the URL-endpoint.  In order to make them work as you see them (you can change them to something else if you like, but if you don't) then you will need to include the following vhosts:
+
+
+<VirtualHost *:80>
+    ServerName cvetechtest.web.local
+    DocumentRoot "path/to/project/public"
+    ErrorLog "path/to/log/folder/cvetechtest.web.local-error_log"
+    CustomLog "path/to/log/folder/cvetechtest.web.local-access_log" common
+    Options Indexes FollowSymLinks
+    SetEnv APPLICATION_ENV development
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerName cvetechtest.web.test
+    DocumentRoot "path/to/project/public"
+    ErrorLog "path/to/log/folder/cvetechtest.web.test-error_log"
+    CustomLog "path/to/log/folder/cvetechtest.web.test-access_log" common
+    Options Indexes FollowSymLinks
+    SetEnv APPLICATION_ENV testing
+</VirtualHost>
+
+4. You will need to add the URLs cvetechtest.web.local and cvetechtest.web.test with host address 127.0.0.1 to your hosts file.
