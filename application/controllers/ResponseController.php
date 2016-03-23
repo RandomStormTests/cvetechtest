@@ -52,8 +52,6 @@ class ResponseController extends \Zend_Controller_Action
          * Preventing any output that isn't explicitly echoed/printed from the action
          */
         $this->_helper->_viewRenderer->setNoRender(true);
-       
-        $this->_helper->getHelper('contextSwitch')->addActionContext('respondXml', 'xml')->initContext();
     }
     
     /**
@@ -65,17 +63,11 @@ class ResponseController extends \Zend_Controller_Action
     {
         if ( !empty( $this->getParam('status') ) ) {
             $this->getResponse()->setHttpResponseCode( $this->getParam('status') );
-        }
-        
-        /**
-         * Determine what the Accept Header requests and select the appropriate response format
-         */
-        //$accept = $this->getFrontController()->getRequest()->get
-        
+        }        
         if ( $this->_isJsonResponse() ) {
-            $this->respondJsonAction();
+            $this->jsonAction();
         } else {
-            $this->respondXmlAction();
+            $this->xmlAction();
         }
     }
     
@@ -99,7 +91,7 @@ class ResponseController extends \Zend_Controller_Action
      * 
      * @return void
      */
-    public function respondJsonAction()
+    public function jsonAction()
     {   
         $this->getHelper('json')->sendJson( $this->getParam('response') );
         exit();
@@ -107,12 +99,45 @@ class ResponseController extends \Zend_Controller_Action
     
     /**
      * XML response action
+     * There are as yet no known helpers to create and dispatch XMLs from ZF
+     * 
+     * Decided against using context switching due to:
+     *  1. potential complexity of response array
+     *  2. requirement to inject parameter format/xml
      * 
      * @return void
      */
-    public function respondXmlAction()
+    public function xmlAction()
     {
-        
+        $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" ?><response></response>');
+        $this->_convertArrayToXml( $this->getParam('response'), $xml );
+        echo $xml->asXML();
     }
     
+    /**
+     * Converts multi-dim array to XML
+     * 
+     * @link http://stackoverflow.com/questions/1397036/how-to-convert-array-to-simplexml
+     * 
+     * @param array            $p_arrData Array to convert
+     * @param SimpleXMLElement $p_xmlData XML element to expand [By Reference]
+     * 
+     * @return string XML
+     */
+    private function _convertArrayToXml($p_arrData, &$p_xmlData)
+    {
+        foreach( $p_arrData as $key => $value ) {
+            if( is_array($value) ) {
+                if( is_numeric($key) ){
+                    $key = 'item'.$key; //dealing with <0/>..<n/> issues
+                }
+                $subnode = $p_xmlData->addChild($key);
+                $this->_convertArrayToXml($value, $subnode);
+            } else {
+                $p_xmlData->addChild("$key",htmlspecialchars("$value"));
+            }
+        }
+    }
+    
+        
 }
