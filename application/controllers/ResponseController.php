@@ -20,7 +20,9 @@ class ResponseController extends \Zend_Controller_Action
      * Result codes
      */
     const RESULT_SUCCESS = 1;
+    const RESULT_SUCCESS_TEXT = "Success";
     const RESULT_FAILURE = 0;
+    const RESULT_FAILURE_TEXT = "Failure";
     
     /**
      * Status codes
@@ -50,17 +52,8 @@ class ResponseController extends \Zend_Controller_Action
          * Preventing any output that isn't explicitly echoed/printed from the action
          */
         $this->_helper->_viewRenderer->setNoRender(true);
-        //$this->getHelper('ViewRenderer')->setNoRender(true);
-        
-        /**
-         * Setting context for JSON response action
-         */
-        $this->_helper->contextSwitch()
-            ->addActionContext(
-                'respondJson', 
-                array('json') 
-            )
-            ->initContext();
+       
+        $this->_helper->getHelper('contextSwitch')->addActionContext('respondXml', 'xml')->initContext();
     }
     
     /**
