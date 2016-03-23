@@ -76,6 +76,9 @@ class AuthTest extends PHPUnit_Framework_TestCase
      */
     public function testAuthSucceed()
     {
+        /**
+         * Stub only the Auth::fetchUserByCredentials() method
+         */
         $stub = $this->getMock( '\API\Services\Auth', array('fetchUserByCredentials') );
         $stub->method('fetchUserByCredentials')->will(
             $this->returnValue(
@@ -96,6 +99,9 @@ class AuthTest extends PHPUnit_Framework_TestCase
      */
     public function testAuthFail()
     {
+        /**
+         * Stub only the Auth::fetchUserByCredentials() method
+         */
         $stub = $this->getMock( '\API\Services\Auth', array('fetchUserByCredentials') );
         $stub->method('fetchUserByCredentials')->will( $this->returnValue( false ) );
         $this->assertFalse( $stub->setUser('hello')->setPass('goodbye')->authenticate() );
