@@ -44,7 +44,7 @@ class User extends \Zend_Db_Table_Abstract
                     ":password" => $p_password
                 )
             );
-        $arrData = $this->fetchAll()->toArray();
+        $arrData = $this->fetchAll($select)->toArray();
         if ( empty($arrData) ) {
              return false;
         }
