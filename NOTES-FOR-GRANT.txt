@@ -1,3 +1,12 @@
+== 23-Mar-2016 ==
+
+Hi Grant,
+
+I've managed to put some more time in and produced a more complete result.  There is some outstanding work, namely retrieving offset-limited all-CVE results for a generic request, however the structure and approach is in place.  I'm also experiencing an issue with the unit-test for the web-service with an XML-response, due to the presence of &gt;-characters in the CSV data.  I could further nest the XML data if necessary, however I don't know if it would be necessary given that this is a tech test designed to evaluate my coding approach rather than actual results.
+
+
+== 21-Mar-2016 ==
+
 Hi Grant,
 
 Due to family commitments - our toddler has been very unwell - and work pressures I haven't been granted time to work through the test and come up with a plan and start producing code.  As a result, I've been called away from my desk more times than I want.  As you know, that kind of disruption makes it difficult to focus and get work done with a good flow.
