@@ -129,7 +129,7 @@ class ResponseController extends \Zend_Controller_Action
         foreach( $p_arrData as $key => $value ) {
             if( is_array($value) ) {
                 if( is_numeric($key) ){
-                    $key = 'item'.$key; //dealing with <0/>..<n/> issues
+                    $key = 'item'; //dealing with <0/>..<n/> issues
                 }
                 $subnode = $p_xmlData->addChild($key);
                 $this->_convertArrayToXml($value, $subnode);
