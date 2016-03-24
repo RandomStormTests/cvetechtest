@@ -22,3 +22,4 @@
 </VirtualHost>
 
 4. You will need to add the URLs cvetechtest.web.local and cvetechtest.web.test with host address 127.0.0.1 to your hosts file.
+5. You will need to run the data/dump.sql  to create the cve table.
