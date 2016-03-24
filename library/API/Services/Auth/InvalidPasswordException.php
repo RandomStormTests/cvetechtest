@@ -12,6 +12,6 @@ namespace API\Services\Auth;
  */
 class InvalidPasswordException extends \InvalidArgumentException {
     
-    protected $_message = 'Invalid password';
+    protected $message = 'Invalid password';
     
 }

@@ -12,6 +12,6 @@ namespace API\Services\Auth;
  */
 class InvalidUsernameException extends \InvalidArgumentException {
     
-    protected $_message = 'Invalid username';
+    protected $message = 'Invalid username';
     
 }

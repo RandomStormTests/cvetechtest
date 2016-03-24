@@ -21,24 +21,14 @@ class CveController extends \Zend_Controller_Action
     public function indexAction()
     {
         if ( false === ( $arrParam = $this->_predeterminedResponses() )  ) {
+            $oCveByName = new \API\Services\GetCveByName();
             if ( !empty( $this->getParam('cvenumber') ) ) {
-                $oCveByName = new \API\Services\GetCveByName();
                 $arrParam = $oCveByName->get( $this->getParam('cvenumber') );
             } else {
-                $arrParam = array_merge(
-                    $this->getAllParams(),
-                    array(
-                        'response' => array(
-                            'result' => 1,
-                            'resultDescription' => 'Success',
-                            'data' => array(
-                                'one' => 1,
-                                'two' => 2,
-                                'three' => 23,
-                            )
-                        ),
-                        'status' => ResponseController::STATUS_FORBIDDEN,
-                    )
+                $arrParam = $oCveByName->getAll( 
+                    $this->getParam('limit'), 
+                    $this->getParam('offset'),
+                    $this->getParam('year')
                 );
             }   
         }   

@@ -33,3 +33,12 @@ Zend_Registry::set(
     'Config', 
     new Zend_Config_Ini( APPLICATION_PATH . '/configs/application.ini', 'testing' )
 );
+
+/**
+ * Bootstrapping ZF for table models
+ */
+$application = new Zend_Application(
+    APPLICATION_ENV,
+    APPLICATION_PATH . '/configs/application.ini'
+);
+$application->bootstrap()->run();
