@@ -190,6 +190,7 @@ class GetCveByNameTest extends PHPUnit_Framework_TestCase
     /**
      * Tests fetching a specific record by CVE-name from CVE table
      * This is a naughty test, because it assumes the legacy CVE names will remain into the future
+     * amd that the table will always have just 9 fields
      * 
      * @return void
      */
@@ -198,7 +199,7 @@ class GetCveByNameTest extends PHPUnit_Framework_TestCase
         $oFactory = new \API\Services\GetCveByName();
         $arrData = $oFactory->fetchCveByName('CVE-1999-0004');
         $this->assertNotEmpty($arrData);
-        $this->assertEquals( 8, count($arrData) ); // Number of columns
+        $this->assertEquals( 9, count($arrData) ); // Number of columns
     }
     
     /**
@@ -215,6 +216,23 @@ class GetCveByNameTest extends PHPUnit_Framework_TestCase
         $arrData = $oFactory->setLimit(25)->setOffset(0)->fetchAllCve(25, 0);
         $this->assertNotEmpty($arrData);
         $this->assertEquals( 25, count($arrData) ); // Number of rows
+    }
+    
+    /**
+     * Tests fetching a set of records from CVE table limited to a number of rows and offset and a year
+     * This test has some implicit assumptions, however the results being tested are sufficiently generalized
+     * to compensate
+     * This test assumes that there are at least 25 records in the CVE table
+     * 
+     * @return void
+     */
+    public function testGetAllDataWithYear()
+    {
+        $oFactory = new \API\Services\GetCveByName();
+        $arrData = $oFactory->setLimit(25)->setOffset(0)->setYear(2001)->fetchAllCve(25, 0);
+        $this->assertNotEmpty($arrData);
+        $this->assertEquals( 25, count($arrData) ); // Number of rows
+        $this->assertEquals( 2001, $arrData[0]['Year'] );
     }
     
 }

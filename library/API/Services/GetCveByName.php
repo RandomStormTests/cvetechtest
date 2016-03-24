@@ -26,6 +26,13 @@ class GetCveByName
     private $_offset = null;
     
     /**
+     * Year of CVE records to retrieve
+     * 
+     * @var integer
+     */
+    private $_year = null;
+    
+    /**
      * Sets limit
      * 
      * @param integer $p_limit Limit setting
@@ -56,7 +63,20 @@ class GetCveByName
         $this->_offset = $p_offset;
         return $this;
     }
-        
+    
+    /**
+     * Sets year
+     * 
+     * @param integer $p_year Year
+     * 
+     * @return \API\Services\GetCveByName
+     */
+    public function setYear($p_year)
+    {
+        $this->_validateYear($p_year);
+        $this->_year = $p_year;
+        return $this;
+    } 
     
     /**
      * Fetches a CVE record by CVE name
@@ -83,8 +103,11 @@ class GetCveByName
     public function fetchAllCve()
     {
         $this->_validateLimit($this->_limit)->_validateOffset($this->_offset);
+        if ( !empty($this->_year) ) {
+            $this->_validateYear($this->_year);
+        }
         $oCve = new \Cve();
-        return $oCve->fetchAllCve($this->_limit, $this->_offset);
+        return $oCve->fetchAllCve($this->_limit, $this->_offset, $this->_year);
     }
     
     /**
@@ -135,9 +158,27 @@ class GetCveByName
         return $this;
     }
     
+    /**
+     * Validates the year
+     * 
+     * @param integer $p_year Year
+     * 
+     * @return \API\Services\GetCveByName
+     * 
+     * @throws \API\Services\GetCveByName\InvalidYearException
+     */
     private function _validateYear($p_year)
     {
-        
+        if ( empty($p_year) ) {
+            /** Doing nothing */
+        } elseif ( is_integer($p_year) AND $p_year > 0) {
+            /** Doing nothing */
+        } elseif ( is_string($p_offset) AND ctype_digit($p_offset) ) {
+            /** Doing nothing */
+        } else {
+            throw new \API\Services\GetCveByName\InvalidYearException();
+        }
+        return $this;
     }
     
     /**
@@ -149,13 +190,16 @@ class GetCveByName
      * 
      * @return array Response data
      */
-    public function getAll($p_limit, $p_offset, $p_year)
+    public function getAll($p_limit, $p_offset, $p_year=null)
     {
         
         $isError = false;
         
         try {
             $this->setLimit($p_limit)->setOffset($p_offset);
+            if ( !empty($p_year) ) {
+                $this->setYear($p_year);
+            }
             if ( false === ( $arrData = $this->fetchAllCve() ) ) {
                 return array(
                     'response' => array(

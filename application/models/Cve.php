@@ -21,7 +21,7 @@ class Cve extends \Zend_Db_Table_Abstract
      * 
      * @param string $p_name CVE name
      * 
-     * @return array | boolean Array of record results or FALSE if nothing found
+     * @return array|boolean Array of record results or FALSE if nothing found
      */
     public function fetchByName($p_name)
     {
@@ -41,16 +41,25 @@ class Cve extends \Zend_Db_Table_Abstract
     }
     
     /**
-     * Fetches all CVE records for offset with a limit of retrned rows
+     * Fetches all CVE records for offset with a limit of returned rows
      * 
-     * @param integer $p_limit
-     * @param integer $p_offset
+     * @param integer $p_limit  Limit
+     * @param integer $p_offset Offset
+     * @param integer $p_year   Year [Optional]
      * 
-     * @return array | boolean Array of record results or FALSE if nothing found
+     * @return array|boolean Array of record results or FALSE if nothing found
      */
-    public function fetchAll($p_limit, $p_offset)
+    public function fetchAllCve($p_limit, $p_offset, $p_year=null)
     {
-        $select = $this->select()->order('ID')->limit($p_limit, $p_offset);
+        $where = "ID IS NOT NULL";
+        if ( !empty($p_year) ) {
+            $where = "`Year` = {$p_year}";
+        }
+        $select = $this
+            ->select()
+            ->where($where)
+            ->order('ID')
+            ->limit($p_limit, $p_offset);
         $arrData = $this->fetchAll($select)->toArray();
         if ( empty($arrData) ) {
              return false;
