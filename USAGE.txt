@@ -1,0 +1,40 @@
+To retrieve a specific CVE entry
+
+	http://<host>/cve/<cveNumber>
+
+To retrieve a set of CVE entries
+
+	http://<host>/cve?limit=<limit>&offset=<offset>
+ 	http://<host>/cve?limit=<limit>&offset=<offset>&year=<year>
+
+Responses come in either JSON or XML, content negotiating on the Accept-header
+	
+	General format - failure (XML)
+		
+		<response>
+  			<result>0</result>
+  			<resultDescription>Failure</resultDescription>
+  			<reason>some reason</reason>
+		</response>		
+
+	General format - success - single row (XML)
+
+		<response>
+  			<result>1</result>
+  			<resultDescription>Success</resultDescription>
+  			<data>
+				data with tags
+			</data>
+		</response>		
+
+	General format - success - multiple row (XML)
+
+		<response>
+  			<result>1</result>
+  			<resultDescription>Success</resultDescription>
+  			<data>
+				<item>
+					data with tags
+				</item>
+			</data>
+		</response>
