@@ -1,6 +1,8 @@
-== 23-Mar-2016 ==
+== 24-Mar-2016 ==
 
-Hi Grant,
+I've made more improvements and covered more of the test's requirements.  Both /cve/:cvenumber and /cve?limit=25&offset=0&year=2001 have been covered.  More unit-tests have been added.  I still haven't worked around the &gt; characters in the xml's Comments data.  Again, I'm not sure how far I need to go with this, since it's a tech-test, but if I had time my approach would be to split the Comments into multi-lines and attribute to the commenter.  The problem is that the ">" has been left by the CVE data developers in the CSV.
+
+== 23-Mar-2016 ==
 
 I've managed to put some more time in and produced a more complete result.  There is some outstanding work, namely retrieving offset-limited all-CVE results for a generic request, however the structure and approach is in place.  I'm also experiencing an issue with the unit-test for the web-service with an XML-response, due to the presence of &gt;-characters in the CSV data.  I could further nest the XML data if necessary, however I don't know if it would be necessary given that this is a tech test designed to evaluate my coding approach rather than actual results.
 
