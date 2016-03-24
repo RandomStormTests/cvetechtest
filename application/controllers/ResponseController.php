@@ -64,11 +64,29 @@ class ResponseController extends \Zend_Controller_Action
         if ( !empty( $this->getParam('status') ) ) {
             $this->getResponse()->setHttpResponseCode( $this->getParam('status') );
         }        
-        if ( $this->_isJsonResponse() ) {
-            $this->jsonAction();
-        } else {
+        /**
+         * Defaults to JSON response
+         */
+        if ( $this->_isXmlResponse() ) {
             $this->xmlAction();
+        } else {
+            $this->jsonAction();
         }
+    }
+    
+    /**
+     * Decides whether an XML response is required based on the Accept header
+     * 
+     * @return boolean
+     */
+    private function _isXmlResponse()
+    {
+        $accept = \Zend_Controller_Request_Http::getHeader('Accept');
+        $arrAccept = explode(",", $accept);
+        if ( false !== array_search('application/xml', $arrAccept) ) {
+            return true;
+        }
+        return false;
     }
     
     /**
