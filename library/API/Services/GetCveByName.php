@@ -223,6 +223,8 @@ class GetCveByName
             $isError = true;
         } catch (\API\Services\GetCveByName\InvalidOffsetException $e) {
             $isError = true;
+        } catch (\API\Services\GetCveByName\InvalidYearException $e) {
+            $isError = true;
         }
         if ($isError) {
             return array(

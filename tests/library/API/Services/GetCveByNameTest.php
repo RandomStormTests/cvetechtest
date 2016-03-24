@@ -188,6 +188,31 @@ class GetCveByNameTest extends PHPUnit_Framework_TestCase
     }
     
     /**
+     * Tests the response when no offset is supplied
+     * 
+     * @return void
+     */
+    public function testGetAllDataInvalidYear()
+    {
+        /**
+         * Stub only the GetCveByName::fetchCveByName() method
+         */
+        $stub = $this->getMock( '\API\Services\GetCveByName', array('fetchAllCve') );
+        $stub->method('fetchAllCve')->will( $this->returnValue(false) );
+        $this->assertEquals( 
+            array(
+                'response' => array(
+                    'result' => ResponseController::RESULT_FAILURE,
+                    'resultDescription' => ResponseController::RESULT_FAILURE_TEXT,
+                    'reason' => "If a year is supplied, it must be valid"
+                ),
+                'status' => ResponseController::STATUS_PROCESSING_ERROR,
+            ),
+            $stub->getAll(25, 0, 'abc')
+        );
+    }
+    
+    /**
      * Tests fetching a specific record by CVE-name from CVE table
      * This is a naughty test, because it assumes the legacy CVE names will remain into the future
      * amd that the table will always have just 9 fields
