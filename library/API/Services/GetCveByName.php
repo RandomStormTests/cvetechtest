@@ -173,7 +173,7 @@ class GetCveByName
             /** Doing nothing */
         } elseif ( is_integer($p_year) AND $p_year > 0) {
             /** Doing nothing */
-        } elseif ( is_string($p_offset) AND ctype_digit($p_offset) ) {
+        } elseif ( is_string($p_year) AND ctype_digit($p_year) ) {
             /** Doing nothing */
         } else {
             throw new \API\Services\GetCveByName\InvalidYearException();
